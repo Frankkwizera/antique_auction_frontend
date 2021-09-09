@@ -1,0 +1,14 @@
+<div class="items-container">
+    <!-- Items -->
+  <div class="card-container">
+    <a *ngFor="let item of allItems; let index = index" class="card" target="_blank" rel="noopener" routerLink="/item/{{item.item_uuid}}">
+      <img class="item-image mat-card-image" width="80" height="50"
+        src="https://www.rd.com/wp-content/uploads/2018/01/02_Holder_Can-You-Guess-What-These-Antique-Objects-Were-Used-For-_64118554_Michal-Ninger.jpg?resize=700,466" />
+      <p class="item-details">
+        <span class="view-item">{{item.item_name}}</span><br>
+        <span class="view-item">${{item.item_base_price_in_usd}}</span>
+      </p>
+      
+    </a>
+  </div>
+</div>
