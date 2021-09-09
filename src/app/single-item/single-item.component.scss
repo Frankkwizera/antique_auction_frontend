@@ -1,0 +1,24 @@
+.single-item-container {
+    display: flex;
+}
+
+.item-details {
+    width: 50%;
+}
+
+.item-bidders {
+    width: 50%;
+    margin-left: 100px;
+}
+
+.item-details > mat-card {
+    width: 100%;
+}
+
+h1.count-down-timer {
+    text-align: center;
+}
+
+p.item-bid {
+    margin: 10px;
+}

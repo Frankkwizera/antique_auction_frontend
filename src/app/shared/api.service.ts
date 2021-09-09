@@ -5,7 +5,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Item, LoginParams, User } from 'src/app/shared/types';
+import { Bid, BidParams, Item, LoginParams, User } from 'src/app/shared/types';
 import ServerRoutes from 'src/app/shared/routes';
 
 @Injectable({
@@ -46,5 +46,25 @@ export class ApiService {
   retrieveAllItems(): Observable<Item[]> {
     return this.httpClient.get<Item[]>(
       this.generateEndpoint(ServerRoutes.ItemManagementServerRoutes.RETRIEVE_ALL_ITEMS))
+  }
+
+  /**
+   * Retrieve item details.
+   * @param itemUUID - UUID representing the target item.
+   * @returns - Item details object.
+   */
+  retrieveItemDetails(itemUUID: string): Observable<Item> {
+    return this.httpClient.get<Item>(
+      this.generateEndpoint(ServerRoutes.ItemManagementServerRoutes.RETRIEVE_ITEM_DETAILS + `/${itemUUID}`));
+  }
+
+  /**
+   * Submits a bid
+   * @param bidParams - Bid parameters.
+   * @returns - Bid details object. 
+   */
+  bidNow(bidParams: BidParams): Observable<Bid> {
+    return this.httpClient.post<Bid>(
+      this.generateEndpoint(ServerRoutes.BidManagementServerRoutes.CREATE_BID), bidParams)
   }
 }

@@ -8,7 +8,6 @@ import { Item } from 'src/app/shared/types';
   styleUrls: ['./all-items.component.scss']
 })
 export class AllItemsComponent implements OnInit {
-  items: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9]
   allItems: Item[] = []
   constructor(private _apiService: ApiService) { }
 

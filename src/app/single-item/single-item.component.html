@@ -1,1 +1,31 @@
-<p>single-item works!</p>
+<h1 class="count-down-timer">{{countDownText}}</h1>
+<div class="single-item-container">
+    <div class="item-details">
+        <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>{{item?.item_name}}</mat-card-title>
+              <mat-card-subtitle>${{item?.item_base_price_in_usd}}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+            <mat-card-content>
+              <p>{{item?.item_description}}</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button (click)="bidNow()">Submit BID</button>
+              <mat-form-field class="bid-amount" appearance="fill">
+                <mat-label>Bid amount</mat-label>
+                <input matInput placeholder="345" [(ngModel)]="bid_amount_in_usd" type="number">
+              </mat-form-field>
+            </mat-card-actions>
+          </mat-card>
+    </div>
+    <div class="item-bidders">
+        <div class="item-bidder-details">
+            <mat-card>
+                <mat-card-subtitle>Current BIDS</mat-card-subtitle>
+                <p class="item-bid" *ngFor="let bid of item?.item_bids?.reverse()"><b>BID:</b> ${{bid.bid_price_in_usd}} <b>USER UUID:</b> {{bid.bidder_uuid}}</p>
+            </mat-card>
+        </div>
+    </div>
+</div>

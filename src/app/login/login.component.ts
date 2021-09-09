@@ -22,6 +22,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this._apiService.userLogin(this.loginForm.value).subscribe(response => {
         // Route to items page.
+        localStorage.setItem('user', JSON.stringify(response));
         this._router.navigateByUrl('/items')
       }, (err => {
         // Alert error.
