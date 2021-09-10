@@ -21,7 +21,6 @@ export class AllItemsComponent implements OnInit {
   retrieveAllItems(): void {
     this._apiService.retrieveAllItems().subscribe(response => {
       this.allItems = response;
-      console.log("<<<<<<< this.allItems: ", this.allItems)
     }, err => {
       alert(err.error.message)
     })

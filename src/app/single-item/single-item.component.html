@@ -17,6 +17,7 @@
                 <mat-label>Bid amount</mat-label>
                 <input matInput placeholder="345" [(ngModel)]="bid_amount_in_usd" type="number">
               </mat-form-field>
+              <button mat-button (click)="registerItemAutoBid()">Register Auto BID</button>
             </mat-card-actions>
           </mat-card>
     </div>
@@ -28,4 +29,18 @@
             </mat-card>
         </div>
     </div>
+</div>
+<div class="user-auto-bid-config">
+  <mat-card>
+    <form [formGroup]="userAutoBidConfigForm" (ngSubmit)="registerUserAutoBidConfig()">
+      <mat-form-field appearance="outline">
+        <mat-label>Max auto bid amount</mat-label>
+        <input type="number" formControlName="max_bid_amount_in_usd" matInput />
+        <mat-icon matSuffix>mail</mat-icon>
+      </mat-form-field>
+      <div class="submit-btn-container">
+        <button mat-raised-button color="primary" type="submit">Register Auto Bid</button>
+      </div>
+    </form>
+  </mat-card>
 </div>

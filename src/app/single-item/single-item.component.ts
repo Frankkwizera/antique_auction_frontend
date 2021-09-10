@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from 'src/app/shared/api.service';
-import { BidParams, Item, User } from 'src/app/shared/types';
+import { BidParams, Item, ItemAutoBidParams, User, UserAutoBidConfig } from 'src/app/shared/types';
 
 @Component({
   selector: 'app-single-item',
@@ -13,7 +14,11 @@ export class SingleItemComponent implements OnInit {
   bid_amount_in_usd!: number;
   countDownText: string = 'Initializing count down timer...';
   user!: User;
-  constructor(private _activatedRoute: ActivatedRoute, private _apiService: ApiService) {
+  userAutoBidConfigForm: FormGroup;
+  constructor(
+      private _activatedRoute: ActivatedRoute, private _apiService: ApiService,
+      private _formBuilder: FormBuilder) {
+    this.userAutoBidConfigForm = this.createUserAutoBidConfigForm();
     this._activatedRoute.params.subscribe(params => {
       this.retrieveItemDetails(params.item_uuid)
     });
@@ -23,6 +28,13 @@ export class SingleItemComponent implements OnInit {
       this.user = JSON.parse(jsonfiedUser);
     }
    }
+
+
+  createUserAutoBidConfigForm(): any {
+    return this._formBuilder.group({
+      max_bid_amount_in_usd: [, [Validators.required]]
+    });
+  }
 
   ngOnInit(): void {}
 
@@ -39,6 +51,10 @@ export class SingleItemComponent implements OnInit {
     })
   };
 
+  /**
+   * Initializes item bid expiration timer.
+   * @param bid_expiration_timestamp - Item bid expiration time.
+   */
   initializeCountDownTimer(bid_expiration_timestamp: string): void {
     // Set the date we're counting down to
     const countDownDate: number = new Date(bid_expiration_timestamp).getTime();
@@ -92,4 +108,41 @@ export class SingleItemComponent implements OnInit {
       alert(err.error.message)
     });
   };
+
+  /**
+   * Registers user auto bid configuration.
+   */
+  registerUserAutoBidConfig(): void {
+    if (this.userAutoBidConfigForm.valid) {
+      const userAutoBidConfig: UserAutoBidConfig = {
+        max_bid_amount_in_usd: this.userAutoBidConfigForm.value.max_bid_amount_in_usd,
+        bidder_uuid: this.user.user_uuid
+      }
+
+      this._apiService.registerUserAutoBidConfig(userAutoBidConfig).subscribe(response => {
+      }, err => {
+        alert(err.error.message)
+      })
+      return
+    }
+
+    alert('Fill in maximum auto bid amount.')
+  };
+
+  /**
+   * Registers item auto bid.
+   */
+  registerItemAutoBid(): void {
+    const itemAutoBidParams: ItemAutoBidParams = {
+      bidder_uuid: this.user.user_uuid,
+      bid_item_uuid: this.item.item_uuid
+    };
+
+    this._apiService.registerItemAutoBid(itemAutoBidParams).subscribe(response => {
+      this.retrieveItemDetails(response.bid_item_uuid);
+      alert('Auto bid registered successfully.')
+    }, err => {
+      alert(err.error.message)
+    })
+  }
 }

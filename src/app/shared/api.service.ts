@@ -5,7 +5,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Bid, BidParams, Item, LoginParams, User } from 'src/app/shared/types';
+import { Bid, BidParams, Item, ItemAutoBid, ItemAutoBidParams, LoginParams, User, UserAutoBid, UserAutoBidConfig } from 'src/app/shared/types';
 import ServerRoutes from 'src/app/shared/routes';
 
 @Injectable({
@@ -67,4 +67,24 @@ export class ApiService {
     return this.httpClient.post<Bid>(
       this.generateEndpoint(ServerRoutes.BidManagementServerRoutes.CREATE_BID), bidParams)
   }
+
+  /**
+   * Registers user auto bid configuration
+   * @param userAutoBidConfig - User auto bid configuration.
+   * @returns User auto bid configuration.
+   */
+  registerUserAutoBidConfig(userAutoBidConfig: UserAutoBidConfig): Observable<UserAutoBid> {
+    return this.httpClient.post<UserAutoBid>(
+      this.generateEndpoint(ServerRoutes.BidManagementServerRoutes.REGISTER_USER_AUTO_CONFI_BID), userAutoBidConfig)
+  };
+
+  /**
+   * Registers item auto bid configuration
+   * @param itemAutoBidParams - Item auto bid parameters.
+   * @returns Item auto bid object.
+   */
+  registerItemAutoBid(itemAutoBidParams: ItemAutoBidParams): Observable<ItemAutoBid> {
+    return this.httpClient.post<ItemAutoBid>(
+      this.generateEndpoint(ServerRoutes.BidManagementServerRoutes.REGISTER_AUTO_BID), itemAutoBidParams)
+  };
 }

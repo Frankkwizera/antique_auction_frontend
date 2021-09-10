@@ -46,3 +46,26 @@ export interface BidParams {
     bid_item_uuid: string,
     bidder_uuid: string
 }
+export interface UserAutoBidConfig {
+    bidder_uuid: string,
+    max_bid_amount_in_usd: number
+}
+
+export interface UserAutoBid {
+    bidder_uuid: string,
+    max_bid_amount_in_usd: number,
+    user_auto_bid_id: number,
+    user_auto_bid_uuid: string
+}
+
+export interface ItemAutoBidParams {
+    bid_item_uuid: string,
+    bidder_uuid: string
+}
+
+export interface ItemAutoBid {
+    auto_bid_id: number,
+    auto_bid_uuid: string,
+    bid_item_uuid: string,
+    bidder_uuid: string
+}
